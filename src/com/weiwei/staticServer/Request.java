@@ -51,7 +51,7 @@ public class Request {
         // 截取请求的url路径
         int url_begin_index = requsetLine.indexOf(BLANK);
         int url_end_index = requsetLine.lastIndexOf(BLANK);
-        reqUrl = requsetInfo.substring(url_begin_index, url_end_index).trim();
+        reqUrl = requsetInfo.substring(url_begin_index + 2, url_end_index).trim();
         int index = reqUrl.indexOf("?");
         String queryStr = null;
         // 截取出querystr

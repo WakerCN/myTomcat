@@ -20,9 +20,8 @@ public class Response {
     private static final String BLANK = " ";
     private static final String CRLF = "\r\n";
 
-
-    private OutputStream os;
-    private StringBuilder responseInfo;
+    private final OutputStream os;
+    private final StringBuilder responseInfo;
     private String mimeType;
     private byte[] resBody;
 
@@ -39,23 +38,30 @@ public class Response {
      */
     public void pushToBrowser(int code) {
         buildHeadInfo(code);
-        buildContent();
         try {
             os.write(responseInfo.toString().getBytes());
+            if (resBody != null) {
+                os.write(resBody);
+            }
             logger.debug("向浏览器发送数据");
         } catch (IOException e) {
             logger.error("响应失败，os写失败", e);
-            pushToBrowser(500);
         }
     }
 
+    /**
+     * 设置响应体
+     *
+     * @param content 响应内容
+     */
     public void setContent(String content) {
         mimeType = "text/plain";
         resBody = content.getBytes();
     }
 
     /**
-     * 将文件转成字节数组
+     * 设置响应体
+     *
      * @param file 文件
      */
     public void setContent(File file) {
@@ -63,7 +69,6 @@ public class Response {
         setMimeType(FileUtils.getMimeType(file));
         System.out.println("mimeType = " + mimeType);
         // 2.将文件读入内存，os输出到浏览器
-        // TODO
         resBody = FileUtils.fileToByteArray(file);
     }
 
@@ -94,14 +99,5 @@ public class Response {
         // 构建响应空行
         responseInfo.append(CRLF);
     }
-
-    /**
-     * 构建响应体
-     */
-    private void buildContent() {
-        // TODO requsetInfo转成字节数组
-        responseInfo.append(resBody);
-    }
-
 
 }

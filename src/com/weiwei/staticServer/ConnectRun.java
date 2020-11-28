@@ -38,7 +38,10 @@ public class ConnectRun implements Runnable {
 
         Request request = new Request(is);
         Response response = new Response(os);
-        response.setContent(new File("C:\\Users\\Waker\\Pictures\\Saved Pictures\\1.txt"));
+
+        // TODO 处理业务逻辑
+
+        response.setContent(new File("C:\\Users\\Waker\\Pictures\\Saved Pictures\\1.png"));
         response.pushToBrowser(200);
         close();
     }

@@ -57,6 +57,7 @@ public class StaticServer {
 
         ExecutorService executor = Executors.newFixedThreadPool(10);
 
+        //noinspection InfiniteLoopStatement
         while (true) {
             try {
                 Socket socket = server.accept();
